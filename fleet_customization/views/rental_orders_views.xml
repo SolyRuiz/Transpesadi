@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Add the smart button for view the Credit Note from picking -->
+    <record id="fleet_vehicle_tag_view_view_tree_inherit" model="ir.ui.view">
+        <field name="name">fleet.vehicle.tag.form.inherited</field>
+        <field name="model">fleet.vehicle.tag</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_tag_view_view_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="tag_type" />
+            </field>
+        </field>
+    </record>
+
+    <record id="rental_order_primary_form_view_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_renting.rental_order_primary_form_view" />
+        <field name="arch" type="xml">
+            <field name="fiscal_position_id" position="after">
+                <field name="cabezal_id" context="{'Cabezal' : True}" attrs="{'readonly':[('state','in',['sale','done'])]}"/>
+                <field name="chasis_id" context="{'Chasis' : True}" attrs="{'readonly':[('state','in',['sale','done'])]}" />
+                <field name="piloto_id" context="{'Cabezal' : True}" attrs="{'readonly':[('state','in',['sale','done'])]}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="rental_deliver_vehicle_primary_form_view_inherit" model="ir.ui.view">
+        <field name="name">receive.deliver.vehicle.form.inherited</field>
+        <field name="model">receive.deliver.vehicle</field>
+        <field name="inherit_id" ref="bi_fleet_rental.receive_deliver_vehicle_form" />
+        <field name="arch" type="xml">
+            <field name="end_result" position="after">
+                <field name="vehicle_id" context="{'Cabezal_Chasis' : True, 'end_result' : end_result, 'document_type' : document_type}" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.inherited</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="invoice_user_id" position="after">
+                <field name="cabezal_id" context="{'Cabezal' : True}" readonly="1"/>
+                <field name="chasis_id" context="{'Chasis' : True}" readonly="1" />
+                <field name="piloto_id" context="{'Cabezal' : True}" readonly="1" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_hr_job_form_inherit" model="ir.ui.view">
+        <field name="name">hr.job.inherited</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form" />
+        <field name="arch" type="xml">
+            <field name="department_id" position="after">
+                <field name="is_mechanic" />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_fleet_repair_form" model="ir.ui.view">
+        <field name="name">fleet.repair.form</field>
+        <field name="model">fleet.repair</field>
+        <field name="inherit_id" ref="car_repair_industry.view_fleet_repair_form" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="attributes">
+                <attribute name="context">{'is_mechanic' : True}</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_fleet_diagnose_assign_to_tech_form_inherit" model="ir.ui.view">
+        <field name="name">fleet.diagnose.assignto.technician.form</field>
+        <field name="model">fleet.diagnose.assignto.technician</field>
+        <field name="inherit_id" ref="car_repair_industry.view_fleet_diagnose_assign_to_tech_form" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="attributes">
+                <attribute name="context">{'is_mechanic' : True}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
