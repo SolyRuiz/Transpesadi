@@ -1,0 +1,106 @@
+<odoo>
+	<record model="ir.ui.view" id="receive_deliver_vehicle_form">
+		<field name="name">receive.deliver.vehicle.form</field>
+		<field name="model">receive.deliver.vehicle</field>
+		<field name="arch" type="xml">
+			<form string="Recibir y entregar vehículo">
+				<header>
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="document_type"/>
+							<field name="deadline_date"/>
+							<field name="partner_id" invisible="0"/>
+							<field name="client" invisible="1"/>
+							<field name="last_odoomtr" />
+						</group>
+						<group>
+							<field name="received_by" attrs="{'invisible' : [('document_type','=','Entregar')]}"/>
+							<field name="deliver_by" attrs="{'invisible' : [('document_type','=','Recibir')]}"/>
+							<field name="phone"/>
+							<field name="end_result" options="{'no_create': True}"/>
+							<field name="contract_id" />
+							<field name="contract_log_id" />
+						</group>
+					</group>
+					<notebook>
+						<page name="Checklist">
+							<field name="check_list_ids" nolabel="1">
+								<tree editable="bottom">
+									<field name="checklist_id" />
+									<field name="user_id" />
+									<field name="rd_vehicle_id" invisible="1"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="receive_deliver_vehicle_tree">
+		<field name="name">receive.deliver.vehicle.tree</field>
+		<field name="model">receive.deliver.vehicle</field>
+		<field name="arch" type="xml">
+			<tree string="Recibir y entregar vehículo">
+				<field name="document_type"/>
+				<field name="deadline_date"/>
+				<field name="partner_id" invisible="1"/>
+				<field name="client"/>
+				<field name="last_odoomtr"/>
+				<field name="received_by"/>
+				<field name="deliver_by"/>
+				<field name="phone"/>
+				<field name="end_result"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_receive_deliver_vehicle_form" model="ir.actions.act_window">
+		<field name="name">Recibir y entregar vehículo</field>
+		<field name="res_model">receive.deliver.vehicle</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem action="action_receive_deliver_vehicle_form" parent="fleet.fleet_vehicles" id="action_receive_deliver_vehicle_form_" groups="fleet.fleet_group_user" sequence="19"/>
+
+	<record model="ir.ui.view" id="checklist_data_form">
+		<field name="name">checklist.entry.form</field>
+		<field name="model">checklist.entry</field>
+		<field name="arch" type="xml">
+			<form string="Checklist">
+				<header>
+				</header>
+				<sheet>
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="user_id"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="checklist_data_tree">
+		<field name="name">checklist.entry.tree</field>
+		<field name="model">checklist.entry</field>
+		<field name="arch" type="xml">
+			<tree string="Checklist">
+				<field name="name"/>
+				<field name="user_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_checklist_data_form" model="ir.actions.act_window">
+		<field name="name">Checklist</field>
+		<field name="res_model">checklist.entry</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem action="action_checklist_data_form" parent="fleet.fleet_vehicles" id="action_checklist_data_form_" groups="fleet.fleet_group_user" sequence="20"/>
+</odoo>

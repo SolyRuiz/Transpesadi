@@ -12,6 +12,12 @@
                 <field name="rent_per_week" attrs="{'invisible':[('product_id', '=', False)]}"/>
                 <field name="rent_per_day" attrs="{'invisible':[('product_id', '=', False)]}"/>
             </field>
+            <field name="company_id" position="after">
+                <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
+            </field>
+            <field name="company_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
         </field>
     </record>
 
@@ -28,6 +34,12 @@
             <field name="replacement_value" position="after">
                 <field name="fleet_id" readonly="True"/>
                 <field name="license_plate" readonly="True"/>
+            </field>
+            <field name="company_id" position="after">
+                <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
+            </field>
+            <field name="company_id" position="attributes">
+                <attribute name="invisible">1</attribute>
             </field>
         </field>
     </record>
@@ -60,5 +72,40 @@
         </field>
     </record>
 
+    <!-- <record id='fleet_vehicle_state_view_tree_' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.state.tree</field>
+        <field name="model">fleet.vehicle.state</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_state_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="is_ingresar_resultados" />
+            </field>
+        </field>
+    </record> -->
 
+    <record id='fleet_vehicle_log_contract_view_form' model='ir.ui.view'>
+        <field name="name">fleet.vehicle.log_contract.form</field>
+        <field name="model">fleet.vehicle.log.contract</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="before">
+                <div class="oe_button_box" name="button_box">   
+                    <button type="object" name="action_view_delivery_rental"
+                            class="oe_stat_button" icon="fa-truck"   groups="base.group_user">
+                        <field name="delivery_count" widget="statinfo" string="Recibir y entregar vehículo" />
+                    </button>
+                </div>
+            </field>
+            <field name="user_id" position="before">
+                <field name="cliente" />
+                <field name="ubicacion_de_alquiler" />
+                <field name="terminos_iniciales" />
+            </field>
+            <field name="purchaser_id" position="after">
+                <field name="frecuencia_de_facturacion" />
+                <field name="fecha_de_orden" />
+                <field name="almacen" />
+            </field>
+        </field>
+    </record>
 </odoo>

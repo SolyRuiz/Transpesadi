@@ -12,6 +12,7 @@ from itertools import groupby
 from operator import itemgetter
 from functools import partial
 from odoo.tools.misc import formatLang
+import dateutil.parser
 
 class res_company(models.Model):
 	_inherit = "res.company"
@@ -271,9 +272,18 @@ class RentalOrder(models.Model):
 	def default_get(self,fields):
 		res = super(RentalOrder, self).default_get(fields)
 		config_id = self.env['res.config.settings'].sudo().search([],order="id desc", limit=1)
+		prev_id = self.env['rental.order'].search_count([]) + 1
+
+		if len(str(prev_id)) == 1:
+			client_order_ref = '00' + str(prev_id)
+		elif len(str(prev_id)) == 2:
+			client_order_ref = '0' + str(prev_id)
+		else:
+			client_order_ref = str(client_order_ref)
 		res.update({
-			'check_saleable' : config_id.saleable_rental_details
-			})
+			'check_saleable' : config_id.saleable_rental_details,
+			'client_order_ref' : 'ALQ' + str(client_order_ref)
+		})
 		return res
 			
 	def _compute_picking_ids(self):
@@ -299,6 +309,17 @@ class RentalOrder(models.Model):
 			vals['partner_invoice_id'] = vals.setdefault('partner_invoice_id', addr['invoice'])
 			vals['partner_shipping_id'] = vals.setdefault('partner_shipping_id', addr['delivery'])
 			vals['pricelist_id'] = vals.setdefault('pricelist_id', partner.property_product_pricelist and partner.property_product_pricelist.id)
+
+		prev_id = self.env['rental.order'].search_count([]) + 1
+
+		if len(str(prev_id)) == 1:
+			client_order_ref = '00' + str(prev_id)
+		elif len(str(prev_id)) == 2:
+			client_order_ref = '0' + str(prev_id)
+		else:
+			client_order_ref = str(client_order_ref)
+
+		vals['client_order_ref'] = 'ALQ' + str(client_order_ref)
 
 		if not vals.get('start_date'):
 			vals['start_date'] = datetime.datetime.today().date()
@@ -349,6 +370,31 @@ class RentalOrder(models.Model):
 						'rental_id' : line.rental_id.id}
 				self.env['asset.serial.wrapper'].create(vals)
 		return
+
+	def _create_fleet_contract(self):
+		for rental in self:
+			for line in rental.rental_line:
+				print ('___ rental.partner_id.name_get() : ', rental.partner_id.name_get())
+				address = rental.partner_id._prepare_display_address()
+				rental_initial_type = dict(self._fields['rental_initial_type'].selection).get(self.rental_initial_type)
+				rental_bill_freq_type = dict(self._fields['rental_bill_freq_type'].selection).get(self.rental_bill_freq_type)
+				vals = {
+					'partner_id' : rental.partner_id.id,
+					'cliente' : rental.partner_id.name_get()[0][1],
+					'ubicacion_de_alquiler' : rental.partner_id.name,
+					'terminos_iniciales' : str(rental.rental_initial) + ' ' + str(rental_initial_type),
+					'start_date' : dateutil.parser.parse(str(rental.start_date)).date() or False,
+					'expiration_date' : dateutil.parser.parse(str(rental.end_date)).date() or False,
+					'vehicle_id' : line.fleet_id and line.fleet_id.id,
+					'ins_ref' : rental.client_order_ref,
+					'frecuencia_de_facturacion' : str(rental.rental_bill_freq) + ' ' + str(rental_bill_freq_type),
+					'almacen' : rental.warehouse_id and rental.warehouse_id.name,
+					'fecha_de_orden' : dateutil.parser.parse(str(rental.date_order)).date() or False,
+					'user_id' : self.env.user.id,
+					'contract_id' : rental.id
+				}
+				contract_id = self.env['fleet.vehicle.log.contract'].create(vals)
+
 
 	def _create_invoice_with_saleable(self , force=False):
 		inv_obj = self.env['account.move']
@@ -535,6 +581,7 @@ class RentalOrder(models.Model):
 				'confirmation_date' : datetime.datetime.now()
 			})
 
+			rental._create_fleet_contract()
 			rental._create_serial_wrapper()
 			invoice = rental._create_invoice_with_saleable(force=True)
 			self.rental_line._action_launch_procurement_rule_custom()

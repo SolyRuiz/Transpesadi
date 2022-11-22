@@ -3,7 +3,7 @@
 
 {
     "name" : "Complete Rental Solution for Fleet Rental and Machine Rental",
-    "version" : "15.0.0.0",
+    "version" : "15.0.0.1",
     "category" : "Rental",
     'summary': 'Car rental product rental service rent product rent car rent machine rental vehicle rental Equipment Rental fleet rental car rental machine rental real estate rental service Equipment rental property rental subscription Machinery rental recurring service',
     "description": """ 
@@ -53,7 +53,10 @@ hire equipements
     "currency": 'EUR',
     'depends' : ['base', 'mail', 'fleet', 'browseinfo_rental_management'],
     "data": [
+        'security/ir.model.access.csv',
+        'security/fleet_security.xml',
         'views/fleet_rent_views.xml',
+        'views/fleet_delivery_vehicle.xml'
     ],
     "auto_install": False,
     "installable": True,

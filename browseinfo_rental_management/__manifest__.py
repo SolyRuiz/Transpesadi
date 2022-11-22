@@ -5,7 +5,7 @@
     'name': 'Odoo Rental Management for Machine,Product and Equipements',
     'summary': 'Rental product rental service rent product rent car rent machine rental machine rent Hire machinery Equipment Rental management machine rental real estate rental sales service Equipment rental property rent service rental Equipment Machinery rental service',
     'category': 'Sales',
-    "version": "15.0.0.6",
+    "version" : "15.3.22.8.2022",
     'description': """
 This module use for Rental management system
 Equipment Rental management

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+bi_fleet_rental.access_checklist_entry,access_checklist_entry,bi_fleet_rental.model_checklist_entry,base.group_user,1,1,1,1
+bi_fleet_rental.access_checklist_lines,access_checklist_lines,bi_fleet_rental.model_checklist_lines,base.group_user,1,1,1,1
+bi_fleet_rental.access_receive_deliver_vehicle,access_receive_deliver_vehicle,bi_fleet_rental.model_receive_deliver_vehicle,base.group_user,1,1,1,1
