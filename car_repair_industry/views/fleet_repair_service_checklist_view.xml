@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- list view definition -->
+        <record id="fleet_checklist_list" model="ir.ui.view">
+            <field name="name">fleet.repair.checklist.list</field>
+            <field name="model">fleet.repair.checklist</field>
+            <field name="arch" type="xml">
+                <tree string="Service Repair: checklists">
+                    <field name="name"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- form view definition -->
+        <record id="fleet_checklist_form" model="ir.ui.view">
+            <field name="name">fleet.repair.checklist.form</field>
+            <field name="model">fleet.repair.checklist</field>
+            <field name="arch" type="xml">
+                <form string="Service Repair: checklist">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" invisible="1"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Checklist name" class="oe_edit_only"/>
+                            <h2>
+                                <field name="name"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="create_date"/>
+                            </group>
+                            <group>
+                                <field name="create_uid"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- action -->
+        <record id="checklist_action_view_tree" model="ir.actions.act_window">
+            <field name="name">Service Repair :- Checklist</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fleet.repair.checklist</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new checklist
+                </p>
+                <p>
+                    You must define a checklist.
+                </p>
+            </field>
+        </record>
+
+        <!--         menu category -->
+        <menuitem
+                id="menu_fleet_checklist"
+                action="checklist_action_view_tree"
+                name="Checklists"
+                parent="car_repair_industry.menu_main_car_repair"
+                sequence="77"/>
+    </data>
+</odoo>

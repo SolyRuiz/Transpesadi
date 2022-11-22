@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="fleet_workorder_report_id" model="ir.actions.report">
+        <field name="name">Car Workorder</field>
+        <field name="model">fleet.workorder</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">car_repair_industry.fleet_workorder_template</field>
+        <field name="report_file">car_repair_industry.fleet_workorder_template</field>
+        <field name="binding_model_id" ref="model_fleet_workorder"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id"
+               eval="[(4, ref('car_repair_industry.group_fleet_repair_service_manager')), (4, ref('fleet.fleet_group_manager'))]"/>
+    </record>
+</odoo>
