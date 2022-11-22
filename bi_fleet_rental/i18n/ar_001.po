@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* bi_fleet_rental
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-07 07:56+0000\n"
+"PO-Revision-Date: 2021-10-07 07:56+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bi_fleet_rental
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_product_product__fleet_id
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_rental_order_line__fleet_id
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_sale_rental_order_line__fleet_id
+msgid "Fleet"
+msgstr "سريع"
+
+#. module: bi_fleet_rental
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_product_product__license_plate
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_rental_order_line__license_plate
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_sale_rental_order_line__license_plate
+msgid "License Plate"
+msgstr "لوحة الترخيص"
+
+#. module: bi_fleet_rental
+#: model:ir.model.fields,help:bi_fleet_rental.field_fleet_vehicle__rent_per_month
+msgid "Month per month."
+msgstr "شهر في الشهر."
+
+#. module: bi_fleet_rental
+#: model:ir.model,name:bi_fleet_rental.model_product_product
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_fleet_vehicle__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: bi_fleet_rental
+#: model:ir.model.constraint,message:bi_fleet_rental.constraint_fleet_vehicle_fleet_product_uniq
+msgid "Product must be unique per Fleet."
+msgstr "يجب أن يكون المنتج فريدًا لكل أسطول."
+
+#. module: bi_fleet_rental
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_fleet_vehicle__rent_per_day
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_product_product__rent_per_day
+msgid "Rent per Day"
+msgstr "الإيجار في اليوم"
+
+#. module: bi_fleet_rental
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_fleet_vehicle__rent_per_month
+msgid "Rent per Month"
+msgstr "الإيجار في الشهر"
+
+#. module: bi_fleet_rental
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_fleet_vehicle__rent_per_week
+#: model:ir.model.fields,field_description:bi_fleet_rental.field_product_product__rent_per_week
+msgid "Rent per Week"
+msgstr "الإيجار في الأسبوع"
+
+#. module: bi_fleet_rental
+#: model:ir.model,name:bi_fleet_rental.model_rental_order_line
+msgid "Rental Order Line"
+msgstr "خط طلب الإيجار"
+
+#. module: bi_fleet_rental
+#: model:ir.model,name:bi_fleet_rental.model_sale_rental_order_line
+msgid "Sale Rental Order Line"
+msgstr "خط طلب إيجار البيع"
+
+#. module: bi_fleet_rental
+#: model:ir.model,name:bi_fleet_rental.model_fleet_vehicle
+msgid "Vehicle"
+msgstr "مركبة"

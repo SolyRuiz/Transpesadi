@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fleet View -->
+    <record model="ir.ui.view" id="fleet_vehicle_product_inherit_form">
+        <field name="name">fleet.vehicle.product.inherit.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <field name="model_year" position="after">
+                <field name="product_id" context="{'default_rent_ok': True}"/>
+                <field name="rent_per_month" attrs="{'invisible':[('product_id', '=', False)]}"/>
+                <field name="rent_per_week" attrs="{'invisible':[('product_id', '=', False)]}"/>
+                <field name="rent_per_day" attrs="{'invisible':[('product_id', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Product View -->
+    <record model="ir.ui.view" id="product_product_fleet_inherit_form">
+        <field name="name">fleet.product.product.inherit.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="browseinfo_rental_management.rental_products_product_form_view"/>
+        <field name="arch" type="xml">
+            <field name="rent_per_month" position="after">
+                <field name="rent_per_week"/>
+                <field name="rent_per_day"/>
+            </field>
+            <field name="replacement_value" position="after">
+                <field name="fleet_id" readonly="True"/>
+                <field name="license_plate" readonly="True"/>
+            </field>
+        </field>
+    </record>
+
+
+    <!-- Rental Order Line View -->
+
+    <record model="ir.ui.view" id="rental_order_line_product_fleet_inherit_tree">
+        <field name="name">fleet.product.rental.order.inherit.form</field>
+        <field name="model">rental.order.line</field>
+        <field name="inherit_id" ref="browseinfo_rental_management.view_rental_order_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_categ_id']" position="after">
+                <field name="product_id" />
+                <field name="fleet_id" attrs="{'invisible':[('product_id', '=', False)]}" />
+                <field name="license_plate" attrs="{'invisible':[('product_id', '=', False)]}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rental_order_line_product_fleet_inherit_form">
+        <field name="name">fleet.product.rental.order.inherit.form</field>
+        <field name="model">rental.order.line</field>
+        <field name="inherit_id" ref="browseinfo_rental_management.view_rental_order_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="fleet_id" attrs="{'invisible':[('product_id', '=', False)]}" readonly="True"/>
+                <field name="license_plate" attrs="{'invisible':[('product_id', '=', False)]}" readonly="True"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
